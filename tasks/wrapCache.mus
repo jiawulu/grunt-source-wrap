@@ -1,0 +1,4 @@
+;(function(){window.cache({
+    source : "{{{source}}}",
+    name : "{{ &fileName }}"
+})})();
