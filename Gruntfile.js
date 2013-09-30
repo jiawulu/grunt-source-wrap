@@ -16,42 +16,26 @@ module.exports = function(grunt) {
       all: [
         'Gruntfile.js',
         'tasks/*.js',
-        '<%= nodeunit.tests %>',
+        '<%= nodeunit.tests %>'
       ],
       options: {
-        jshintrc: '.jshintrc',
+        jshintrc: '.jshintrc'
       },
     },
 
     // Before generating any new files, remove any previously-created files.
     clean: {
-      tests: ['tmp'],
+      tests: ['tmp','test/src/*__cached.js']
     },
 
     // Configuration to be run (and then tested).
     source_wrap: {
-      default_options: {
-        options: {
-        },
+     build: {
         files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!',
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
-    },
-
-    // Unit tests.
-    nodeunit: {
-      tests: ['test/*_test.js'],
-    },
+          'tmp': ['test/src/*','!test/src/*__cached.js']
+        }
+      }
+    }
 
   });
 
@@ -65,7 +49,7 @@ module.exports = function(grunt) {
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'source_wrap', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'source_wrap']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);
