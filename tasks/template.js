@@ -16,6 +16,10 @@ exports.template = function(filePath,source){
 
     source = inline(source).replace(/\"/g,"\\\"");
 
+    var arr = filePath.split('/'),
+        fileName = arr[arr.length - 1];
+
+
     var from = path.join(path.dirname(fs.realpathSync(__filename)), './wrapCache.mus'),
 
         compiledSource =  execute(
@@ -23,7 +27,7 @@ exports.template = function(filePath,source){
                 from: from,
                 data: {
                     source: source,
-                    fileName: filePath
+                    fileName: fileName
                 }
             }
         );
