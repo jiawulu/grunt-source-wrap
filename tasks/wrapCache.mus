@@ -1,4 +1,0 @@
-;(function(){window.lib.awp.cache({
-    source : "{{{source}}}",
-    name : "{{ &fileName }}"
-})})();

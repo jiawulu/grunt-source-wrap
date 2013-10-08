@@ -1,0 +1,1 @@
+;(function(){ {{{funcName}}}("{{ &fileName }}","{{{source}}}")})();

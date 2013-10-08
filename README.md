@@ -24,9 +24,15 @@ grunt.loadNpmTasks('grunt-source-wrap');
             files: [{
                 expand: true,
                 cwd: 'test/1.0',
-                src: ['**/*.js','!**/*__cached.js','**/*.css','!**/*__cached.css'],
+                src: ['**/*.js','**/*.css','!**/*.cah.js'],
                 dest: 'test/1.0',
-                ext: '.cah.js'
+                ext: '.cah.js',
+                funcName : 'window.lib.awp.cache'
             }]
         }
     }
+
+## TODO
+
+1. support user define template
+2. support user define wrapper

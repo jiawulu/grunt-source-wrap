@@ -12,22 +12,26 @@ var path = require('path');
 var util = require('util');
 var fs = require('fs');
 
-exports.template = function(filePath,source){
+exports.template = function (filePath, source, funcName) {
 
-    source = inline(source).replace(/\"/g,"\\\"");
+    var template = '';
+    if (endsWith(filePath, ".js.cah.js")) {
+        template = './wrapCache_js.mus';
+    } else {
+        source = inline(source).replace(/\"/g, "\\\"");
+        template = './wrapCache_css.mus';
+    }
 
     var arr = filePath.split('/'),
-        fileName = arr[arr.length - 1];
-
-
-    var from = path.join(path.dirname(fs.realpathSync(__filename)), './wrapCache.mus'),
-
-        compiledSource =  execute(
+        fileName = arr[arr.length - 1],
+        from = path.join(path.dirname(fs.realpathSync(__filename)), template),
+        compiledSource = execute(
             {
                 from: from,
                 data: {
                     source: source,
-                    fileName: fileName
+                    fileName: fileName,
+                    funcName: funcName
                 }
             }
         );
@@ -36,24 +40,23 @@ exports.template = function(filePath,source){
 
 }
 
-var inline = function (source) {
+function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
 
-    source = source.split(/\r?\n/g).map(function(line) {
+
+var inline = function (source) {
+    source = source.split(/\r?\n/g).map(function (line) {
         return  line.replace(/^\s+|\s+$/g, '');
     }).join(";");
-
     return source;
 };
 
 
-var execute = function(param){
-
+var execute = function (param) {
     var mustache = require('mustache'),
         ENCODING = 'utf-8';
-
     var source = fs.readFileSync(param.from, ENCODING);
-
     var tpl = mustache.to_html(source, param.data);
-
     return tpl;
 }

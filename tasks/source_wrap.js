@@ -35,7 +35,7 @@ module.exports = function (grunt) {
 
                 destPath = destArr.join("/");
 
-                var compiledSource = require("./template").template(destPath, source);
+                var compiledSource = require("./template").template(destPath, source, f.funcName);
 
                 grunt.file.write(destPath, compiledSource);
 
